@@ -17,7 +17,11 @@ namespace Cynov
 
         static void Main(string[] args)
         {
-            CreateAuditoriums();
+            // Add if necessary 
+            //CreateAuditoriums();
+
+
+          //  Console.WriteLine(Utils.ConvertToDateTime("15/12/2018 - 15:50"));
             while (true)
             {
                 switch (Menu())
@@ -209,8 +213,73 @@ namespace Cynov
 
         static void AddShowTimes()
         {
+            Console.WriteLine("Select a film from the list below");
+            ListFilms();
+            int filmChoice;
+            Int32.TryParse(Console.ReadLine(), out filmChoice);
+            Console.WriteLine("Then select an auditorium from the list below");
+            ListAuditoriums();
+            int auditoriumChoice;
+            Int32.TryParse(Console.ReadLine(), out auditoriumChoice);
+            Console.WriteLine("Start time (ex: 15/10/2018 - 16:00) ?");
+            string startTime = Console.ReadLine();
+            Console.WriteLine("Finish time (ex: 15/10/2018 - 18:00)?");
+            string finishTime = Console.ReadLine();
+            Console.WriteLine("Is it 3D (y/n) ?");
+            string threeDChoice = Console.ReadLine();
+            Boolean tChoice = threeDChoice == "y" ? true : false;
+            Console.WriteLine("Is it on Original Version (y/n) ?");
+            string oVChoice = Console.ReadLine();
+            Boolean oChoice = oVChoice == "y" ? true : false;
+
+            Showtime s = new Showtime
+            {
+                Auditorium = db.Auditoriums.Where(a => a.Id == auditoriumChoice).FirstOrDefault(),
+                Film = db.Films.Where(f => f.Id == filmChoice).FirstOrDefault(),
+                Start = Utils.ConvertToDateTime(startTime),
+                Finish = Utils.ConvertToDateTime(finishTime),
+                ThreeDimensional = tChoice,
+                OriginalVersion = oChoice
+            };
+
+
+            db.Showtimes.Add(s);
+            db.SaveChanges();
+            Console.WriteLine("Show added !");
         }
 
+        static void RegisterToShowTime()
+        {
+
+        }
+
+        static void ViewUserHistory()
+        {
+
+        }
+
+        static void ListFilms()
+        {
+            Console.WriteLine("List films (id, name, director, producer, year, type)" +
+                "\n========================================================");
+            foreach (Film f in db.Films)
+            {
+                Console.WriteLine($"#{f.Id} - {f.Name} - {f.Director} - " +
+                    $"{f.Producer} - {f.ReleaseDate.Year} - {f.Type}");
+            }
+        }
+
+
+        static void ListAuditoriums()
+        {
+
+            Console.WriteLine("List auditoriums (id, name, capacity)" +
+                "\n=========================================");
+            foreach (Auditorium a in db.Auditoriums)
+            {
+                Console.WriteLine($"#{a.Id} - {a.Name} - {a.Capacity}");
+            }
+        }
 
         static void CreateAuditoriums()
         {
