@@ -14,14 +14,20 @@ namespace Cynov
         private static List<User> users = new List<User>();
         private static bool hasSession = false;
         private static bool adminSession = false;
+        private static int currentUserId = 0;
 
         static void Main(string[] args)
         {
             // Add if necessary 
-            //CreateAuditoriums();
+            // CreateAuditoriums();
 
 
-          //  Console.WriteLine(Utils.ConvertToDateTime("15/12/2018 - 15:50"));
+            //  Console.WriteLine(Utils.ConvertToDateTime("15/12/2018 - 15:50"));
+
+            //string s = Guid.NewGuid().ToString("N").Substring(0, 10);
+
+            //Console.WriteLine();
+
             while (true)
             {
                 switch (Menu())
@@ -62,7 +68,7 @@ namespace Cynov
                 Username = username,
                 Password = Utils.EncodePassword(pass),
                 Email = email,
-                IsAdmin = true
+                // IsAdmin = true
             };
             db.Users.Add(u);
             db.SaveChanges();
@@ -90,19 +96,13 @@ namespace Cynov
 
         }
 
-        static void ListShowTimes()
-        {
-
-        }
-
-
-        static void ChooseShowTime()
-        {
-            Console.WriteLine("Choose a showtime");
-            ListShowTimes();
-            int showTimeChoice;
-            Int32.TryParse(Console.ReadLine(), out showTimeChoice);
-        }
+        //static void ChooseShowTime()
+        //{
+        //    Console.WriteLine("Choose a showtime");
+        //    ListShowTimes();
+        //    int showTimeChoice;
+        //    Int32.TryParse(Console.ReadLine(), out showTimeChoice);
+        //}
 
         static void Exit()
         {
@@ -113,7 +113,6 @@ namespace Cynov
         static void GetCreditentials(User u)
         {
             Console.WriteLine("Password ?");
-            Console.WriteLine(u.Password);
             string inputPass = Console.ReadLine();
 
 
@@ -129,9 +128,10 @@ namespace Cynov
                 switch (u.IsAdmin)
                 {
                     case true:
+                        currentUserId = u.Id;
                         adminSession = true;
                         Console.WriteLine("You can now add films and showtimes");
-                        while(true)
+                        while (true)
                         {
                             Console.WriteLine("1-Add films\n2-Add showtimes\n3-Return to menu");
                             int choice;
@@ -150,11 +150,34 @@ namespace Cynov
                             }
                         }
                     case false:
-                        Console.WriteLine("You can now pick a showtime from the list");
-                        break;
+                        currentUserId = u.Id;
+                        Console.WriteLine("Make a choice");
+                        while (true)
+                        {
+                            Console.WriteLine("1-Register to a showtime\n2-Search\n" +
+                                "3-View my history\n4-Return to menu");
+                            int choice;
+                            Int32.TryParse(Console.ReadLine(), out choice);
+
+                            switch (choice)
+                            {
+                                case 1:
+                                    RegisterToShowTime();
+                                    break;
+                                case 2:
+                                    Search();
+                                    break;
+                                case 3:
+                                    ViewUserHistory();
+                                    break;
+                                case 4:
+                                    return;
+                            }
+                        }
                     default:
                         break;
                 }
+
             }
             else
             {
@@ -250,7 +273,33 @@ namespace Cynov
 
         static void RegisterToShowTime()
         {
+            Console.WriteLine("Select a show from the list below");
+            ListShowTimes();
+            int showChoice;
+            Int32.TryParse(Console.ReadLine(), out showChoice);
 
+            User cUser = db.Users.Where(u => u.Id == currentUserId).
+                FirstOrDefault();
+
+            Showtime cShowtime = db.Showtimes.Where(s => s.Id == showChoice).
+                FirstOrDefault();
+
+
+            cUser.Showtimes.Add(cShowtime);
+
+            if (cShowtime.Auditorium.CurrentCapacity > 0)
+            {
+                cShowtime.Auditorium.CurrentCapacity -= 1;
+            }
+            else
+            {
+                cShowtime.Auditorium.CurrentCapacity = 0;
+            }
+
+
+            db.SaveChanges();
+
+            Console.WriteLine("Show registered for your account !");
         }
 
         static void ViewUserHistory()
@@ -281,17 +330,38 @@ namespace Cynov
             }
         }
 
+        static void ListShowTimes()
+        {
+            Console.WriteLine("List showtimes (id, film's name, start, finish, 3D, OV, Remaining places)" +
+                "\n====================================================================================");
+            foreach (Showtime s in db.Showtimes.Include("Film").Include("Auditorium"))
+            {
+                Console.WriteLine($"#{s.Id} - {s.Film.Name} - {s.Start} - {s.Finish} - " +
+                    $"{(s.ThreeDimensional ? "Yes" : "No")} - {(s.OriginalVersion ? "Yes" : "No")} " +
+                    $"{(s.Auditorium.CurrentCapacity > 0 ? s.Auditorium.CurrentCapacity.ToString() : "0")}");
+            }
+
+        }
+
         static void CreateAuditoriums()
         {
             Auditorium a = new Auditorium
             {
                 Name = "B3",
-                Capacity = 50
+                Capacity = 50,
+                CurrentCapacity = 50
             };
 
 
             db.Auditoriums.Add(a);
             db.SaveChanges();
+        }
+
+
+
+        static void PrintReceiptTicket()
+        {
+
         }
     }
 }

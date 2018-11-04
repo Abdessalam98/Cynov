@@ -14,5 +14,7 @@ namespace Cynov
 
         public int Capacity { get; set; }
 
+        public int CurrentCapacity { get; set; }
+
     }
 }

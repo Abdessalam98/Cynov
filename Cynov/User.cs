@@ -30,7 +30,24 @@ namespace Cynov
             set;
         }
 
+        public bool IsActive
+        {
+            get;
+            set;
+        }
+
+        public DateTime LastUpdateTime
+        {
+            get;
+            set;
+        }
+
         public List<Showtime> Showtimes
+        {
+            get;
+            set;
+        }
+        public List<Order> Orders
         {
             get;
             set;
@@ -44,6 +61,10 @@ namespace Cynov
         public User()
         {
             IsAdmin = false;
+            IsActive = true;
+            Showtimes = new List<Showtime>();
+            Orders = new List<Order>();
+            LastUpdateTime = DateTime.Now;
         }
     }
 }

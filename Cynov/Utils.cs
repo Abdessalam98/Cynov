@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -58,6 +59,12 @@ namespace Cynov
 
             return new DateTime(int.Parse(fullDate[2]), int.Parse(fullDate[1]), int.Parse(fullDate[0]),
                 int.Parse(fullTime[0]), int.Parse(fullTime[1]), 0);
+        }
+
+
+        public static string ConvertStringDate(DateTime dtime)
+        {
+            return dtime.ToString("g", CultureInfo.CreateSpecificCulture("fr-FR"));
         }
     }
 }
