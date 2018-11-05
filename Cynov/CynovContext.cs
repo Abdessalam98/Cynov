@@ -16,5 +16,7 @@ namespace Cynov
         public DbSet<Showtime> Showtimes { get; set; }
 
         public DbSet <Auditorium> Auditoriums { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
     }
 }

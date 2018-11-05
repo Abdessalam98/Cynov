@@ -19,7 +19,7 @@ namespace Cynov
         static void Main(string[] args)
         {
             // Add if necessary 
-            // CreateAuditoriums();
+            CreateAuditoriums();
 
 
             //  Console.WriteLine(Utils.ConvertToDateTime("15/12/2018 - 15:50"));
@@ -68,7 +68,7 @@ namespace Cynov
                 Username = username,
                 Password = Utils.EncodePassword(pass),
                 Email = email,
-                // IsAdmin = true
+                IsAdmin = true
             };
             db.Users.Add(u);
             db.SaveChanges();
@@ -283,9 +283,9 @@ namespace Cynov
 
             Showtime cShowtime = db.Showtimes.Where(s => s.Id == showChoice).
                 FirstOrDefault();
-
-
+           
             cUser.Showtimes.Add(cShowtime);
+            cUser.Orders.Add(PrintReceiptTicket(cShowtime));
 
             if (cShowtime.Auditorium.CurrentCapacity > 0)
             {
@@ -345,23 +345,62 @@ namespace Cynov
 
         static void CreateAuditoriums()
         {
-            Auditorium a = new Auditorium
+            Auditorium a1 = new Auditorium
             {
-                Name = "B3",
+                Name = "A1",
+                Capacity = 30,
+                CurrentCapacity = 30
+            };
+
+            Auditorium a2 = new Auditorium
+            {
+                Name = "A2",
+                Capacity = 30,
+                CurrentCapacity = 30
+            };
+            Auditorium b1 = new Auditorium
+            {
+                Name = "B1",
+                Capacity = 50,
+                CurrentCapacity = 50
+            };
+            Auditorium b2 = new Auditorium
+            {
+                Name = "B2",
+                Capacity = 50,
+                CurrentCapacity = 50
+            };
+            Auditorium b3 = new Auditorium
+            {
+                Name = "B2",
                 Capacity = 50,
                 CurrentCapacity = 50
             };
 
 
-            db.Auditoriums.Add(a);
+            db.Auditoriums.Add(a1);
+            db.Auditoriums.Add(a2);
+            db.Auditoriums.Add(b1);
+            db.Auditoriums.Add(b2);
+            db.Auditoriums.Add(b3);
+      
             db.SaveChanges();
         }
 
 
 
-        static void PrintReceiptTicket()
+        static Order PrintReceiptTicket(Showtime showTime)
         {
 
+
+            Order order = new Order
+            {
+                Showtime = showTime
+            };
+
+            db.Orders.Add(order);
+
+            return order;
         }
     }
 }
