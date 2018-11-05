@@ -19,7 +19,7 @@ namespace Cynov
         static void Main(string[] args)
         {
             // Add if necessary 
-            CreateAuditoriums();
+            //CreateAuditoriums();
 
 
             //  Console.WriteLine(Utils.ConvertToDateTime("15/12/2018 - 15:50"));
@@ -372,7 +372,7 @@ namespace Cynov
             };
             Auditorium b3 = new Auditorium
             {
-                Name = "B2",
+                Name = "B3",
                 Capacity = 50,
                 CurrentCapacity = 50
             };
