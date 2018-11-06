@@ -39,6 +39,19 @@ namespace Cynov
                     case 5: Exit(); break;
                 }
             }
+
+            //try
+            //{
+            //    // Code here
+            //}
+            //catch (Exception)
+            //{
+            //    Console.WriteLine("Something went wrong.");
+            //}
+            //finally
+            //{
+            //    Console.WriteLine("Program stopped.");
+            //}
         }
 
         static int Menu()
@@ -285,7 +298,12 @@ namespace Cynov
                 FirstOrDefault();
            
             cUser.Showtimes.Add(cShowtime);
-            cUser.Orders.Add(PrintReceiptTicket(cShowtime));
+
+            Order o = PrintReceiptTicket(cShowtime);
+            cUser.Orders.Add(o);
+
+
+            PrintTicket(cUser, o);
 
             if (cShowtime.Auditorium.CurrentCapacity > 0)
             {
@@ -402,5 +420,13 @@ namespace Cynov
 
             return order;
         }
+
+
+        static void PrintTicket(User u, Order o)
+        {
+            string c = DateTime.Now + "\n" + o.OrderId + "\n" + u.Username;
+            FileManager.Instance.WriteToFile(DateTime.Now.ToString("yyyyMMdd-HHmmss")+"-"+o.OrderId+u.Username.ToLower(), c);
+        }
+
     }
 }

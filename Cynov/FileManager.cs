@@ -35,8 +35,6 @@ namespace Cynov
             _fileName = fileName + ".txt";
 
             _streamWriter = new StreamWriter(Path.Combine(path, _fileName), true);
-            Stream stream = new FileStream(Path.Combine(path, _fileName), FileMode.Append, FileAccess.Write);
-
             _streamWriter.WriteLine(content);
             _streamWriter.Flush();
 
