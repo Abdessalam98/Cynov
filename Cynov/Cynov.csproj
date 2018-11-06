@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Auditorium.cs" />
     <Compile Include="CynovContext.cs" />
+    <Compile Include="DataException.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="Film.cs" />
     <Compile Include="FilmType.cs" />
