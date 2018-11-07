@@ -15,7 +15,7 @@ namespace Cynov
         private static bool hasSession = false;
         private static bool adminSession = false;
         private static int currentUserId = 0;
-
+    
         public void Start()
         {
             while (true)
@@ -96,6 +96,11 @@ namespace Cynov
 
         static void Search()
         {
+            Console.WriteLine("Search ?\n==========================");
+            string searchKey = Console.ReadLine();
+
+            ListShowTimes(db.Showtimes.Include("Film").Include("Auditorium").
+                Where(s => s.Film.Name.Contains(searchKey) || s.Film.Producer.Contains(searchKey) || s.Film.Director.Contains(searchKey)));
 
         }
 
@@ -338,11 +343,16 @@ namespace Cynov
             }
         }
 
-        static void ListShowTimes()
+        static void ListShowTimes(IEnumerable<Showtime> showtimes = null)
         {
+            if (showtimes == null)
+            {
+                showtimes = db.Showtimes.Include("Film").Include("Auditorium"); 
+            }
+
             Console.WriteLine("List showtimes (id, film's name, start, finish, 3D, OV, Remaining places)" +
                 "\n====================================================================================");
-            foreach (Showtime s in db.Showtimes.Include("Film").Include("Auditorium"))
+            foreach (Showtime s in showtimes)
             {
                 Console.WriteLine($"#{s.Id} - {s.Film.Name} - {s.Start} - {s.Finish} - " +
                     $"{(s.ThreeDimensional ? "Yes" : "No")} - {(s.OriginalVersion ? "Yes" : "No")} " +
