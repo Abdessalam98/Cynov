@@ -16,7 +16,7 @@ Lorem ipsum
 
 Le projet se présente comme suit :
 
-```bash
+```
 ├─ Cynov
 |  ├─ Auditorium.cs
 |  ├─ FileManager.cs
@@ -195,8 +195,8 @@ Ce projet a été réalisé sur Visual Studio sous Windows 10
 Si vous êtes sous Linux vérifiez que vous avez ces paquets installés
 
 - dotnet-host
-- dotnet-runtime-2.0
-- dotnet-sdk-2.0
+- dotnet-runtime-2.1
+- dotnet-sdk-2.1
 
 Ensuite deplacez vous dans le dossier contenant le projet et lancez la commande :
 
