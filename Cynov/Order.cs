@@ -12,7 +12,7 @@ namespace Cynov
         public int Id { get; set; }
         public DateTime PrintDate { get; set; }
         public string Company { get; set; }
-        public int Price { get; set; }
+        public int Price { get; set; } // Todo change to double
         public string OrderId { get; set; }
         public User User { get; set; }
         public Showtime Showtime { get; set; }
