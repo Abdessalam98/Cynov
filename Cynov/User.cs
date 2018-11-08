@@ -42,7 +42,7 @@ namespace Cynov
             set
             {
                 if (!Validator.IsValidEmail(value))
-                    throw new DataException("Incorrect email form");
+                    throw new DataException("Incorrect email format");
                 _email = value;
             }
         }
@@ -56,7 +56,7 @@ namespace Cynov
             set
             {
                 if (!Validator.IsValidPass(value, 6))
-                    throw new DataException("Incorrect pass form");
+                    throw new DataException("Incorrect pass format");
                 _password = value;
             }
         }

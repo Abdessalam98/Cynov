@@ -49,20 +49,18 @@ namespace Cynov
             return isValid;
         }
 
-        public static DateTime ConvertToDateTime(string strDate)
+        public static DateTime StringToDateTime(string strDate)
         {
             string[] splittedDate = strDate.Split('-');
             string[] fullDate = splittedDate[0].Split('/');
             string[] fullTime = splittedDate[1].Split(':');
-
-
-
+            
             return new DateTime(int.Parse(fullDate[2]), int.Parse(fullDate[1]), int.Parse(fullDate[0]),
                 int.Parse(fullTime[0]), int.Parse(fullTime[1]), 0);
         }
 
 
-        public static string ConvertStringDate(DateTime dtime)
+        public static string DateTimeToString(DateTime dtime)
         {
             return dtime.ToString("g", CultureInfo.CreateSpecificCulture("fr-FR"));
         }

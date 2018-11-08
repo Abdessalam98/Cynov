@@ -15,7 +15,7 @@ namespace Cynov
         private static bool hasSession = false;
         private static bool adminSession = false;
         private static int currentUserId = 0;
-    
+
         public void Start()
         {
             while (true)
@@ -24,24 +24,9 @@ namespace Cynov
                 {
                     case 1: SignUp(); break;
                     case 2: SignIn(); break;
-                    case 3: Search(); break;
-                    case 4: ListShowTimes(); break;
-                    case 5: Exit(); break;
+                    case 3: Exit(); break;
                 }
             }
-
-            //try
-            //{
-            //    // Code here
-            //}
-            //catch (Exception)
-            //{
-            //    Console.WriteLine("Something went wrong.");
-            //}
-            //finally
-            //{
-            //    Console.WriteLine("Program stopped.");
-            //}
         }
 
         static int Menu()
@@ -50,7 +35,7 @@ namespace Cynov
             do
             {
                 Console.WriteLine("Welcome to Cynov !\nMake a choice\n1-Sign up" +
-                    "\n2-Sign in\n3-Search\n4-List showtimes\n5-Exit");
+                    "\n2-Sign in\n3-Exit");
                 Int32.TryParse(Console.ReadLine(), out choice);
             } while (choice <= 0 || choice > 5);
             return choice;
@@ -59,8 +44,8 @@ namespace Cynov
         static void SignUp()
         {
             User u = new User();
- 
-            while(true)
+
+            while (true)
             {
                 try
                 {
@@ -96,7 +81,7 @@ namespace Cynov
 
         static void SignIn()
         {
-            Console.WriteLine("Sign Up\n=================Email ?");
+            Console.WriteLine("Sign In\n=================\nEmail ?");
             string input = Console.ReadLine();
 
             User resUser = db.Users.Where(u => u.Email == input.Trim().ToLower()).FirstOrDefault();
@@ -121,39 +106,26 @@ namespace Cynov
 
         }
 
-        //static void ChooseShowTime()
-        //{
-        //    Console.WriteLine("Choose a showtime");
-        //    ListShowTimes();
-        //    int showTimeChoice;
-        //    Int32.TryParse(Console.ReadLine(), out showTimeChoice);
-        //}
-
         static void Exit()
         {
             Environment.Exit(0);
         }
-
 
         static void GetCreditentials(User u)
         {
             Console.WriteLine("Password ?");
             string inputPass = Console.ReadLine();
 
-
             passwordSaved = u.Password;
-
 
             if (Utils.DecodePassword(passwordSaved, inputPass))
             {
                 hasSession = true;
+                currentUserId = u.Id;
                 Console.WriteLine(((u.IsAdmin) ? "Admin User" : "Basic User"));
-
-
                 switch (u.IsAdmin)
                 {
                     case true:
-                        currentUserId = u.Id;
                         adminSession = true;
                         Console.WriteLine("You can now add films and showtimes");
                         while (true)
@@ -175,7 +147,6 @@ namespace Cynov
                             }
                         }
                     case false:
-                        currentUserId = u.Id;
                         Console.WriteLine("Make a choice");
                         while (true)
                         {
@@ -242,8 +213,6 @@ namespace Cynov
             Console.WriteLine("Release Date ?");
             DateTime releaseDate = DateTime.ParseExact(Console.ReadLine(), "dd/MM/yyyy", CultureInfo.CreateSpecificCulture("fr-FR"));
 
-
-
             Film f = new Film
             {
                 Name = filmName,
@@ -284,12 +253,11 @@ namespace Cynov
             {
                 Auditorium = db.Auditoriums.Where(a => a.Id == auditoriumChoice).FirstOrDefault(),
                 Film = db.Films.Where(f => f.Id == filmChoice).FirstOrDefault(),
-                Start = Utils.ConvertToDateTime(startTime),
-                Finish = Utils.ConvertToDateTime(finishTime),
+                Start = Utils.StringToDateTime(startTime),
+                Finish = Utils.StringToDateTime(finishTime),
                 ThreeDimensional = tChoice,
                 OriginalVersion = oChoice
             };
-
 
             db.Showtimes.Add(s);
             db.SaveChanges();
@@ -334,7 +302,11 @@ namespace Cynov
 
         static void ViewUserHistory()
         {
+            Console.WriteLine("My orders:\n============================");
 
+            foreach (Order o in db.Orders.Include("User").Where(o=> o.User.Id == currentUserId)) {
+                Console.WriteLine(o.OrderId);
+            } ;
         }
 
         static void ListFilms()
@@ -347,7 +319,6 @@ namespace Cynov
                     $"{f.Producer} - {f.ReleaseDate.Year} - {f.Type}");
             }
         }
-
 
         static void ListAuditoriums()
         {
@@ -364,16 +335,23 @@ namespace Cynov
         {
             if (showtimes == null)
             {
-                showtimes = db.Showtimes.Include("Film").Include("Auditorium"); 
+                showtimes = db.Showtimes.Include("Film").Include("Auditorium");
             }
 
             Console.WriteLine("List showtimes (id, film's name, start, finish, 3D, OV, Remaining places)" +
                 "\n====================================================================================");
             foreach (Showtime s in showtimes)
             {
-                Console.WriteLine($"#{s.Id} - {s.Film.Name} - {s.Start} - {s.Finish} - " +
-                    $"{(s.ThreeDimensional ? "Yes" : "No")} - {(s.OriginalVersion ? "Yes" : "No")} " +
-                    $"{(s.Auditorium.CurrentCapacity > 0 ? s.Auditorium.CurrentCapacity.ToString() : "0")}");
+                if (s.Start <= DateTime.Now)
+                {
+                    Console.WriteLine($"#{s.Id} - {s.Film.Name} - {s.Start} - {s.Finish} - " +
+                        $"{(s.ThreeDimensional ? "Yes" : "No")} - {(s.OriginalVersion ? "Yes" : "No")} " +
+                        $"{(s.Auditorium.CurrentCapacity > 0 ? s.Auditorium.CurrentCapacity.ToString() : "0")}");
+                }
+                else
+                {
+                    Console.WriteLine("No showtime");
+                }
             }
 
         }
@@ -411,8 +389,7 @@ namespace Cynov
                 Capacity = 50,
                 CurrentCapacity = 50
             };
-
-
+            
             db.Auditoriums.Add(a1);
             db.Auditoriums.Add(a2);
             db.Auditoriums.Add(b1);
@@ -422,12 +399,9 @@ namespace Cynov
             db.SaveChanges();
         }
 
-
-
+        
         static Order PrintReceiptTicket(Showtime showTime)
         {
-
-
             Order order = new Order
             {
                 Showtime = showTime
@@ -437,7 +411,6 @@ namespace Cynov
 
             return order;
         }
-
 
         static void PrintTicket(User u, Order o)
         {
