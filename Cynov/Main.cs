@@ -230,34 +230,75 @@ namespace Cynov
 
         static void AddShowTimes()
         {
-            Console.WriteLine("Select a film from the list below");
-            ListFilms();
-            int filmChoice;
-            Int32.TryParse(Console.ReadLine(), out filmChoice);
-            Console.WriteLine("Then select an auditorium from the list below");
-            ListAuditoriums();
-            int auditoriumChoice;
-            Int32.TryParse(Console.ReadLine(), out auditoriumChoice);
-            Console.WriteLine("Start time (ex: 15/10/2018 - 16:00) ?");
-            string startTime = Console.ReadLine();
-            Console.WriteLine("Finish time (ex: 15/10/2018 - 18:00)?");
-            string finishTime = Console.ReadLine();
-            Console.WriteLine("Is it 3D (y/n) ?");
-            string threeDChoice = Console.ReadLine();
-            Boolean tChoice = threeDChoice == "y" ? true : false;
-            Console.WriteLine("Is it on Original Version (y/n) ?");
-            string oVChoice = Console.ReadLine();
-            Boolean oChoice = oVChoice == "y" ? true : false;
+            Showtime s = new Showtime();
 
-            Showtime s = new Showtime
+            while(true)
             {
-                Auditorium = db.Auditoriums.Where(a => a.Id == auditoriumChoice).FirstOrDefault(),
-                Film = db.Films.Where(f => f.Id == filmChoice).FirstOrDefault(),
-                Start = Utils.StringToDateTime(startTime),
-                Finish = Utils.StringToDateTime(finishTime),
-                ThreeDimensional = tChoice,
-                OriginalVersion = oChoice
-            };
+                string finishTimeFinal = "";
+                string startTimeFinal = "";
+                try
+                {
+                    Console.WriteLine("Select a film from the list below");
+                    ListFilms();
+                    int filmChoice;
+                    Int32.TryParse(Console.ReadLine(), out filmChoice);
+
+
+                    s.Film = db.Films.Where(f => f.Id == filmChoice).FirstOrDefault();
+
+                    Console.WriteLine("Then select an auditorium from the list below");
+                    ListAuditoriums();
+
+                    int auditoriumChoice;
+                    Int32.TryParse(Console.ReadLine(), out auditoriumChoice);
+
+                    s.Auditorium = db.Auditoriums.Where(a => a.Id == auditoriumChoice).FirstOrDefault();
+
+                    Console.WriteLine("Start time (ex: 15/10/2018 - 16:00) ?");
+                    string startTime = Console.ReadLine();
+
+                    if (startTime == null || startTime.Length == 0 || s.Start == DateTime.MinValue)
+                    {
+                        throw new DataException("Incorrect start date format, Retry");
+                    }
+                    else
+                    {
+                        startTimeFinal = startTime;
+                        s.Start = Utils.StringToDateTime(startTimeFinal);
+                     }
+
+                    Console.WriteLine("Finish time (ex: 15/10/2018 - 18:00)?");
+                    string finishTime = Console.ReadLine();
+
+                    if (finishTime != null || finishTime.Length > 0 || s.Finish == DateTime.MinValue)
+                    {
+                        throw new DataException("Incorrect date format, Retry");
+                    }
+                    else
+                    {
+                        finishTimeFinal = finishTime;
+                        s.Finish = Utils.StringToDateTime(finishTimeFinal);
+                    }
+
+                    Console.WriteLine("Is it 3D (y/n) ?");
+                    string threeDChoice = Console.ReadLine();
+                    Boolean tChoice = threeDChoice == "y" ? true : false;
+
+                    s.ThreeDimensional = tChoice;
+
+                    Console.WriteLine("Is it on Original Version (y/n) ?");
+                    string oVChoice = Console.ReadLine();
+                    Boolean oChoice = oVChoice == "y" ? true : false;
+
+                    s.OriginalVersion = oChoice;
+
+                    break;
+                }catch(DataException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+            }
 
             db.Showtimes.Add(s);
             db.SaveChanges();
