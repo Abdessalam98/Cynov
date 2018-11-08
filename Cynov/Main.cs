@@ -58,28 +58,45 @@ namespace Cynov
 
         static void SignUp()
         {
-            Console.WriteLine("Sign In\n=================" +
-                "\nUsername ?");
-            string username = Console.ReadLine();
-            Console.WriteLine("Email ?");
-            string email = Console.ReadLine();
-            Console.WriteLine("Password ?");
-            string pass = Console.ReadLine();
-
-            User u = new User
+            User u = new User();
+ 
+            while(true)
             {
-                Username = username,
-                Password = Utils.EncodePassword(pass),
-                Email = email,
-                IsAdmin = true
-            };
+                try
+                {
+                    Console.WriteLine("Sign Up\n=================");
+
+                    if (u.Username == null)
+                    {
+                        Console.WriteLine("Username ?");
+                        u.Username = Console.ReadLine();
+                    }
+
+                    if (u.Email == null)
+                    {
+                        Console.WriteLine("Email ?");
+                        u.Email = Console.ReadLine();
+                    }
+
+                    if (u.Password == null)
+                    {
+                        Console.WriteLine("Password ?");
+                        u.Password = Utils.EncodePassword(Console.ReadLine());
+                    }
+                    break;
+                }
+                catch (DataException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
             db.Users.Add(u);
             db.SaveChanges();
         }
 
         static void SignIn()
         {
-            Console.WriteLine("Email ?");
+            Console.WriteLine("Sign Up\n=================Email ?");
             string input = Console.ReadLine();
 
             User resUser = db.Users.Where(u => u.Email == input.Trim().ToLower()).FirstOrDefault();

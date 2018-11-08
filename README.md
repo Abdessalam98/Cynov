@@ -39,13 +39,13 @@ Le projet se présente comme suit :
 **Propriétés**
 
 - Id <sup><code>int</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Identifiant de Auditorium nécessaire aussi à la BDD</em>
 - Name <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Nom de l'Auditorium</em>
 - Capacity <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Capacité totale de l'Auditorium</em>
 - CurrentCapacity <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Capacité actuelle de l'auditorium</em>
 
 **Méthodes**
 
@@ -57,11 +57,11 @@ Le projet se présente comme suit :
 Propriétés
 
 - \_fileManager <sup><code>FileManager</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Type FileManager</em>
 - \_fileName <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Nom du fichier sur lequel sera écrit le contenu</em>
 - \_streamWriter <sup><code>StreamWriter</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>StreamWriter pour écrire du contenu</em>
 
 Méthodes
 
@@ -70,21 +70,21 @@ Méthodes
 Propriétés
 
 - Id <sup><code>int</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Identifiant de Film nécessaire aussi à la BDD</em>
 - Name <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Nom du film</em>
 - Director <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Directeur du film</em>
 - Producer <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Producteur du film </em>
 - Gender <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Genre du film</em>
 - ReleaseDate <sup><code>DateTime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Date de sortie</em>
 - Type <sup><code>FilmType</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Type du film (enum de 3 valeurs)</em>
 - Showtimes <sup><code>List\<Showtime\>()</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Liste des séances associées </em>
 
 Méthodes
 
@@ -105,17 +105,17 @@ Propriétés
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
 - PrintDate <sup><code>DateTime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Date d'impression</em>
 - Company <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Le ciméma en question d'où provient la commande</em>
 - Price <sup><code>double</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Prix de la commande</em>
 - OrderId <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>GUID de la commande</em>
 - User <sup><code>User</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>L'utilisateur associé</em>
 - Showtime <sup><code>Showtime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>La séance associée</em>
 
 Méthodes
 
@@ -131,19 +131,19 @@ Propriétés
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
 - Auditorium <sup><code>Auditorium</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>La salle associée</em>
 - Start <sup><code>DateTime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Date de début</em>
 - Finish <sup><code>DateTime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Date de fin</em>
 - ThreeDimensional <sup><code>bool</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>En 3D</em>
 - OriginalVersion <sup><code>bool</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>En VO</em>
 - Users <sup><code>List\<Users\>()</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Liste d'utilisateurs associés</em>
 - Film <sup><code>Film</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Film associé</em>
 
 Méthodes
 
@@ -154,21 +154,21 @@ Propriétés
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
 - Username <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Nom d'utilisateur</em>
 - Email <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Email de l'utilisateur</em>
 - Password <sup><code>string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Mot de passe de l'utilisateur</em>
 - IsAdmin <sup><code>bool</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Booléen si administrateur </em>
 - IsActive <sup><code>bool</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Booléen si le compte est actif</em>
 - LastUpdateTime <sup><code>DateTime</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Dernière date de mise à jour</em>
 - Showtimes <sup><code>List\<Showtime\>()</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Liste des séances associées</em>
 - Orders <sup><code>List\<Order\>()</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Liste des commandes associées</em>
 
 Méthodes
 
