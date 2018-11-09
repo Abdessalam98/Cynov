@@ -27,6 +27,22 @@ Réaliser une application pour le cinéma Cynov
 
 Le projet se présente comme suit :
 
+```
+├─ Cynov
+|  ├─ Auditorium.cs
+|  ├─ FileManager.cs
+|  ├─ Film.cs
+|  ├─ FilmType.cs
+|  ├─ Main.cs
+|  ├─ Order.cs
+|  ├─ Program.cs
+|  ├─ Showtime.cs
+|  ├─ User.cs
+|  ├─ Utils.cs
+|  └─ Validator.cs
+└─ Cynov.sln
+```
+
 ## Classes et méthodes
 
 ### Class [`Auditorium`](Cynov/Auditorium.cs)
