@@ -31,6 +31,8 @@ Le projet se présente comme suit :
 ├─ Cynov
 |  ├─ Auditorium.cs
 |  ├─ FileManager.cs
+|  ├─ CynovContext.cs
+|  ├─ DataException.cs
 |  ├─ Film.cs
 |  ├─ FilmType.cs
 |  ├─ Main.cs
