@@ -35,8 +35,8 @@ namespace Cynov
             int choice = 0;
             do
             {
-                Console.WriteLine("Welcome to Cynov !\nMake a choice\n1-Sign up" +
-                    "\n2-Sign in\n3-Exit");
+                Console.WriteLine("Welcome to Cynov !\nMake a choice\n=========================" +
+                    "\n1-Sign up\n2-Sign in\n3-Exit");
                 Int32.TryParse(Console.ReadLine(), out choice);
             } while (choice <= 0 || choice > 5);
             return choice;
@@ -150,7 +150,7 @@ namespace Cynov
                             }
                         }
                     case false:
-                        Console.WriteLine("Make a choice");
+                        Console.WriteLine("Make a choice\n==========================");
                         while (true)
                         {
                             Console.WriteLine("1-Register to a showtime\n2-Search\n" +
@@ -284,7 +284,7 @@ namespace Cynov
             {
                 cUser.Showtimes.Add(cShowtime);
 
-                Order o = PrintReceiptTicket(cShowtime);
+                Order o = AddOrder(cShowtime);
                 cUser.Orders.Add(o);
                 
                 PrintTicket(cUser, o);
@@ -410,7 +410,7 @@ namespace Cynov
         }
 
         
-        static Order PrintReceiptTicket(Showtime showTime)
+        static Order AddOrder(Showtime showTime)
         {
             Order order = new Order
             {

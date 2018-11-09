@@ -2,35 +2,30 @@
 
 > Projet permettant de mettre en pratique ses connainssances en C#
 
-![screen projet](pics/desc.png)
-
 ## Objectif
 
-Utiliser les notions vues en cours, à savoir : les fonctions, les collections, streams,...
+Utiliser les notions vues en cours, à savoir : les fonctions, les collections, streams, programmation objet...
 
 ## Description du projet
 
-Lorem ipsum
+Réaliser une application pour le cinéma Cynov
+
+## Compétences évaluées
+
+- Livrer un code qui compile
+- Bonne utilisation des Design Patterns
+- Savoir modéliser une structure objet via une demande client
+- Utilisation de l’orienté objet
+- Savoir stocker des données dans une base de données
+- Bonne utilisation de LINQ
+- Gérer les comportements imprévus via des exceptions
+- Gérer des chemins de code différents selon le niveau de droits du visiteur
+- Savoir verrouiller son code pour réduire les effets de bord futurs
+- Qualité de code et Conventions de nommage
 
 ## Organisation du projet
 
 Le projet se présente comme suit :
-
-```
-├─ Cynov
-|  ├─ Auditorium.cs
-|  ├─ FileManager.cs
-|  ├─ Film.cs
-|  ├─ FilmType.cs
-|  ├─ Main.cs
-|  ├─ Order.cs
-|  ├─ Program.cs
-|  ├─ Showtime.cs
-|  ├─ User.cs
-|  ├─ Utils.cs
-|  └─ Validator.cs
-└─ Cynov.sln
-```
 
 ## Classes et méthodes
 
@@ -47,14 +42,9 @@ Le projet se présente comme suit :
 - CurrentCapacity <sup><code>string</code></sup>
   > <em>Capacité actuelle de l'auditorium</em>
 
-**Méthodes**
-
-- toString() <sup><code>-> string</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
-
 ### Class [`FileManager`](Cynov/FileManager.cs)
 
-Propriétés
+**Propriétés**
 
 - \_fileManager <sup><code>FileManager</code></sup>
   > <em>Type FileManager</em>
@@ -63,11 +53,13 @@ Propriétés
 - \_streamWriter <sup><code>StreamWriter</code></sup>
   > <em>StreamWriter pour écrire du contenu</em>
 
-Méthodes
+**Méthodes**
+
+- WriteToFile(string fileName, string content) <sup><code>-> void</code></sup>
 
 ### Class [`Film`](Cynov/Film.cs)
 
-Propriétés
+**Propriétés**
 
 - Id <sup><code>int</code></sup>
   > <em>Identifiant de Film nécessaire aussi à la BDD</em>
@@ -86,21 +78,89 @@ Propriétés
 - Showtimes <sup><code>List\<Showtime\>()</code></sup>
   > <em>Liste des séances associées </em>
 
-Méthodes
-
 ### Class [`FilmType`](Cynov/FilmType.cs)
-
-Propriétés
-Méthodes
 
 ### Class [`Main`](Cynov/Main.cs)
 
-Propriétés
-Méthodes
+**Méthodes**
+
+- Start() <sup><code>-> void</code></sup>
+
+  > <em>Lance le programme</em>
+
+- Menu() <sup><code>-> int</code></sup>
+
+  > <em>Affiche le menu récupére le choix de l'utlisateur</em>
+
+- SignUp() <sup><code>-> void</code></sup>
+
+  > <em>Inscrit un utilisateur</em>
+
+- SignIn() <sup><code>-> void</code></sup>
+
+  > <em>Connecte l'utilisateur</em>
+
+- Search() <sup><code>-> void</code></sup>
+
+  > <em>Effectue une recherche </em>
+
+- Exit() <sup><code>-> void</code></sup>
+
+  > <em>Quitte la console</em>
+
+- GetCreditentials(User u) <sup><code>-> void</code></sup>
+
+  > <em>Récupère les identifiants de l'utilisateur</em>
+
+- AddFilms() <sup><code>-> void</code></sup>
+
+  > <em>Ajoute des films</em>
+
+- AddShowTimes() <sup><code>-> void</code></sup>
+
+  > <em>Ajoute des séances</em>
+
+- RegisterToShowTime() <sup><code>-> void</code></sup>
+
+  > <em>Enregistre une séance pour un utilisateur</em>
+
+- ViewUserHistory() <sup><code>-> void</code></sup>
+
+  > <em>Voir les commandes de l'utilisateur</em>
+
+- ListFilms() <sup><code>-> void</code></sup>
+
+  > <em>Liste les films</em>
+
+- ListAuditoriums() <sup><code>-> void</code></sup>
+
+  > <em>Liste les salles</em>
+
+- ListShowTimes(IEnumerable<Showtime> showtimes = null) <sup><code>-> void</code></sup>
+
+  > <em>Liste les séances</em>
+
+- CreateAuditoriums() <sup><code>-> void</code></sup>
+
+  > <em>Crée des salles</em>
+
+- AddOrder(Showtime showTime) <sup><code>-> Order</code></sup>
+
+  > <em>Affecte une commande</em>
+
+static void PrintTicket(User u, Order o)
+
+- PrintTicket(User u, Order o) <sup><code>-> void</code></sup>
+
+  > <em>Imprime le bon de commande</em>
+
+- IsAlreadyRegistered(int inputChoice, User user) <sup><code>-> bool</code></sup>
+
+  > <em>Vérifie si l'utilisateur a déjà pris une séance</em>
 
 ### Class [`Order`](Cynov/Order.cs)
 
-Propriétés
+**Propriétés**
 
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
@@ -117,16 +177,11 @@ Propriétés
 - Showtime <sup><code>Showtime</code></sup>
   > <em>La séance associée</em>
 
-Méthodes
-
 ### Class [`Program`](Cynov/Program.cs)
-
-Propriétés
-Méthodes
 
 ### Class [`Showtime`](Cynov/Showtime.cs)
 
-Propriétés
+**Propriétés**
 
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
@@ -145,11 +200,9 @@ Propriétés
 - Film <sup><code>Film</code></sup>
   > <em>Film associé</em>
 
-Méthodes
-
 ### Class [`User`](Cynov/User.cs)
 
-Propriétés
+**Propriétés**
 
 - Id <sup><code>int</code></sup>
   > <em>Heading and its markup split by newlines.</em>
@@ -170,25 +223,25 @@ Propriétés
 - Orders <sup><code>List\<Order\>()</code></sup>
   > <em>Liste des commandes associées</em>
 
-Méthodes
+**Méthodes**
+
+- toString() <sup><code>-> string</code></sup>
 
 ### Class [`Utils`](Cynov/Utils.cs)
 
-Propriétés
-Méthodes
-
 ### Class [`Validator`](Cynov/Validator.cs)
 
-Propriétés
-Méthodes
-
 ## Parcours utilisateur / Scénario d'usage
+
+On part du principe qu'on autorise que les insriptions d'utilisateurs ordinaires. Pour rajouter un administrateur on doit set le champ `IsAdmin` (par défaut false) à true lors de la création. Un administrateur est déjà crée `admin@cynov.com/1234`. Ce dernier peut rajouter des films et des séances. Un utilisateur ordinaire est aussi crée `a.benharira@dotwiz.fr/1234`. Celui ci pourra s'incrire à une séance, effectuer une recherche et voir ses séances achetées. Lors de son achat un fichier est créé sur son bureau et ce sur le format suivant `20181109-070311-cc93e817fa-abdessalam.txt`
 
 ## Execution du programme
 
 Ce projet a été réalisé sur Visual Studio sous Windows 10
 
 ### Windows
+
+Ouvrir le projet avec Visual Studio
 
 ### Linux
 
@@ -201,10 +254,6 @@ Si vous êtes sous Linux vérifiez que vous avez ces paquets installés
 Ensuite deplacez vous dans le dossier contenant le projet et lancez la commande :
 
     dotnet run
-
-## Améliorations
-
-lorem ipsum
 
 ## Auteur
 
