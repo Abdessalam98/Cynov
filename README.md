@@ -52,13 +52,13 @@ Le projet se présente comme suit :
 **Propriétés**
 
 - Id <sup><code>int</code></sup>
-  > <em>Identifiant de Auditorium nécessaire aussi à la BDD</em>
+  > <em>Identifiant de la salle nécessaire aussi à la BDD</em>
 - Name <sup><code>string</code></sup>
-  > <em>Nom de l'Auditorium</em>
+  > <em>Nom de la salle</em>
 - Capacity <sup><code>string</code></sup>
-  > <em>Capacité totale de l'Auditorium</em>
+  > <em>Capacité totale de la salle</em>
 - CurrentCapacity <sup><code>string</code></sup>
-  > <em>Capacité actuelle de l'auditorium</em>
+  > <em>Capacité actuelle de la salle</em>
 
 ### Class [`FileManager`](Cynov/FileManager.cs)
 
@@ -166,8 +166,6 @@ Le projet se présente comme suit :
 
   > <em>Affecte une commande</em>
 
-static void PrintTicket(User u, Order o)
-
 - PrintTicket(User u, Order o) <sup><code>-> void</code></sup>
 
   > <em>Imprime le bon de commande</em>
@@ -181,7 +179,7 @@ static void PrintTicket(User u, Order o)
 **Propriétés**
 
 - Id <sup><code>int</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Identifiant de commande nécessaire aussi à la BDD</em>
 - PrintDate <sup><code>DateTime</code></sup>
   > <em>Date d'impression</em>
 - Company <sup><code>string</code></sup>
@@ -202,7 +200,7 @@ static void PrintTicket(User u, Order o)
 **Propriétés**
 
 - Id <sup><code>int</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Identifiant de la séance nécessaire aussi à la BDD</em>
 - Auditorium <sup><code>Auditorium</code></sup>
   > <em>La salle associée</em>
 - Start <sup><code>DateTime</code></sup>
@@ -223,7 +221,7 @@ static void PrintTicket(User u, Order o)
 **Propriétés**
 
 - Id <sup><code>int</code></sup>
-  > <em>Heading and its markup split by newlines.</em>
+  > <em>Identifiant de l'utilisateur nécessaire aussi à la BDD</em>
 - Username <sup><code>string</code></sup>
   > <em>Nom d'utilisateur</em>
 - Email <sup><code>string</code></sup>
@@ -251,7 +249,7 @@ static void PrintTicket(User u, Order o)
 
 ## Parcours utilisateur / Scénario d'usage
 
-On part du principe qu'on autorise que les insriptions d'utilisateurs ordinaires. Pour rajouter un administrateur on doit set le champ `IsAdmin` (par défaut false) à true lors de la création. Un administrateur est déjà crée `admin@cynov.com/1234`. Ce dernier peut rajouter des films et des séances. Un utilisateur ordinaire est aussi crée `a.benharira@dotwiz.fr/1234`. Celui ci pourra s'incrire à une séance, effectuer une recherche et voir ses séances achetées. Lors de son achat un fichier est créé sur son bureau et ce sur le format suivant `20181109-070311-cc93e817fa-abdessalam.txt`
+On part du principe qu'on autorise que les insriptions d'utilisateurs ordinaires. Pour rajouter un administrateur on doit set le champ `IsAdmin` (par défaut false) à true lors de la création. Un administrateur est déjà crée `admin@cynov.com/1234`. Ce dernier peut rajouter des films et des séances. Un utilisateur ordinaire est aussi crée `a.benharira@dotwiz.fr/1234`. Celui ci pourra s'incrire à une séance, effectuer une recherche et voir ses séances achetées. Lors de son achat un fichier est créé sur son bureau et ce sur le format suivant `20181109-070311-cc93e817fa-abdessalam.txt` celui-ci servira de ticket.
 
 ## Execution du programme
 
