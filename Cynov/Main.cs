@@ -18,6 +18,7 @@ namespace Cynov
 
         public void Start()
         {
+            // CreateAuditoriums();
             while (true)
             {
                 switch (Menu())
@@ -68,6 +69,8 @@ namespace Cynov
                         Console.WriteLine("Password ?");
                         u.Password = Utils.EncodePassword(Console.ReadLine());
                     }
+
+                    // u.IsAdmin = true;
                     break;
                 }
                 catch (DataException e)
@@ -258,7 +261,6 @@ namespace Cynov
                 ThreeDimensional = tChoice,
                 OriginalVersion = oChoice
             };
-
             db.Showtimes.Add(s);
             db.SaveChanges();
             Console.WriteLine("Show added !");
@@ -277,27 +279,34 @@ namespace Cynov
             Showtime cShowtime = db.Showtimes.Where(s => s.Id == showChoice).
                 FirstOrDefault();
 
-            cUser.Showtimes.Add(cShowtime);
 
-            Order o = PrintReceiptTicket(cShowtime);
-            cUser.Orders.Add(o);
-
-
-            PrintTicket(cUser, o);
-
-            if (cShowtime.Auditorium.CurrentCapacity > 0)
+            if (!IsAlreadyRegistered(showChoice, cUser))
             {
-                cShowtime.Auditorium.CurrentCapacity -= 1;
-            }
-            else
+                cUser.Showtimes.Add(cShowtime);
+
+                Order o = PrintReceiptTicket(cShowtime);
+                cUser.Orders.Add(o);
+                
+                PrintTicket(cUser, o);
+                if (cShowtime.Auditorium.CurrentCapacity > 0)
+                {
+                    cShowtime.Auditorium.CurrentCapacity -= 1;
+                }
+                else
+                {
+                    cShowtime.Auditorium.CurrentCapacity = 0;
+                }
+
+
+                db.SaveChanges();
+
+                Console.WriteLine("Show registered for your account !");
+
+            }else
             {
-                cShowtime.Auditorium.CurrentCapacity = 0;
+                Console.WriteLine("Already registered to this showtime !");
             }
-
-
-            db.SaveChanges();
-
-            Console.WriteLine("Show registered for your account !");
+            
         }
 
         static void ViewUserHistory()
@@ -305,7 +314,8 @@ namespace Cynov
             Console.WriteLine("My orders:\n============================");
 
             foreach (Order o in db.Orders.Include("User").Where(o=> o.User.Id == currentUserId)) {
-                Console.WriteLine(o.OrderId);
+                Console.WriteLine("Order Id: " + o.OrderId + "- Order Date: " + o.PrintDate 
+                    + "- Order Price: " + o.Price);
             } ;
         }
 
@@ -342,7 +352,7 @@ namespace Cynov
                 "\n====================================================================================");
             foreach (Showtime s in showtimes)
             {
-                if (s.Start <= DateTime.Now)
+                if (s.Start >= DateTime.Now)
                 {
                     Console.WriteLine($"#{s.Id} - {s.Film.Name} - {s.Start} - {s.Finish} - " +
                         $"{(s.ThreeDimensional ? "Yes" : "No")} - {(s.OriginalVersion ? "Yes" : "No")} " +
@@ -414,8 +424,24 @@ namespace Cynov
 
         static void PrintTicket(User u, Order o)
         {
-            string c = DateTime.Now + "\n" + o.OrderId + "\n" + u.Username;
-            FileManager.Instance.WriteToFile(DateTime.Now.ToString("yyyyMMdd-HHmmss") + "-" + o.OrderId + u.Username.ToLower(), c);
+            string c = "Cynov Cinema\nUser: " + u.Username + "\nEmail: " + u.Email+ "\nOrder Id: " 
+                + o.OrderId +"\nOrder Date: " + DateTime.Now;
+            FileManager.Instance.WriteToFile(DateTime.Now.ToString("yyyyMMdd-HHmmss") 
+                + "-" + o.OrderId + "-" + u.Username.ToLower(), c);
+        }
+
+        static bool IsAlreadyRegistered(int inputChoice, User user)
+        {
+            bool c = false;
+
+            foreach (Showtime s in db.Showtimes.Include("Users").Where(s => s.Id == inputChoice))
+            {
+                if (s.Users.Contains(user))
+                {
+                    c = true;
+                }
+            }
+            return c;
         }
 
     }
