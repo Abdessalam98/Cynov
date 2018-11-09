@@ -245,6 +245,8 @@ Le projet se présente comme suit :
 
 ### Class [`Utils`](Cynov/Utils.cs)
 
+  > <em>Contient des méthodes pour le chiffrement du mot de passe et les conversions de date</em>
+
 ### Class [`Validator`](Cynov/Validator.cs)
 
 ## Parcours utilisateur / Scénario d'usage
